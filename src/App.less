@@ -4,21 +4,96 @@
   height: 100vh;
 }
 
+.textOverflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .todo {
   padding: 16px;
   max-width: 540px;
   width: 100%;
   &__list {
-    margin-top: 16px;
+    margin-top: 32px;
     &-item {
       list-style-type: none;
+      padding: 8px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 0;
+      border-radius: 8px;
+      box-shadow: 2px 2px 1px #b1b1b1;
+      padding: 16px;
+      margin-bottom: 16px;
+      &__info {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+      }
+      &__body {
+        display: flex;
+      }
       &__controls {
         display: flex;
         align-items: center;
+      }
+      &__text {
+        margin-left: 8px;
+        max-width: 400px;
+        padding: 0 8px;
+      }
+      &__check {
+        width: 24px;
+        background: #000;
+        cursor: pointer;
+      }
+      &__editbtn {
+        svg {
+          path {
+            fill: #cfad03;
+          }
+        }
+        &:hover {
+          svg {
+            path {
+              fill: #e4c112;
+            }
+          }
+        }
+      }
+      &__delbtn {
+        svg {
+          path {
+            stroke: #e23703;
+          }
+        }
+        &:hover {
+          svg {
+            path {
+              stroke: #b82e04;
+            }
+          }
+        }
+      }
+      &__date {
+        font-size: 12px;
+        margin-right: 8px;
+        color: #8d8d8d;
+        span {
+          margin-right: 8px;
+        }
+      }
+      &__file {
+        display: flex;
+        align-items: center;
+        color: #8d8d8d;
+        svg {
+          width: 18px;
+          path {
+            stroke: #8d8d8d;
+          }
+        }
       }
     }
   }
@@ -38,6 +113,10 @@
     font-size: 16px;
     font-family: inherit;
     font-weight: bold;
+    transition: all 0.5s ease-in-out;
+    &:focus {
+      border-bottom: 2px solid #0075ff;
+    }
   }
   &__texarea {
     width: 100%;
@@ -46,12 +125,52 @@
     font-family: inherit;
     resize: vertical;
   }
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    &-date {
+      display: flex;
+      align-items: center;
+      input {
+        font-family: inherit;
+        padding: 4px;
+        border: none;
+        border-bottom: 1px solid #b1b1b1;
+        outline: none;
+      }
+    }
+    &-upload {
+      display: flex;
+      align-items: center;
+    }
+  }
   &__button {
     border: none;
     background: transparent;
     cursor: pointer;
     padding: 0;
     margin: 0 4px;
+    transition: all 0.5s linear;
+  }
+  &__createBtn {
+    background-color: #0075ff;
+    padding: 4px 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    color: #f0f0f0;
+    svg {
+      margin-left: 8px;
+      path {
+        stroke: #f0f0f0;
+      }
+    }
+    &:disabled {
+      background-color: #d3d3d3;
+    }
   }
   &__checkbox {
     margin: 0 4px;
