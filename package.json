@@ -137,5 +137,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.0"
   }
 }

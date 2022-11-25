@@ -1,7 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import DocumentIcon from '../ui/documentIcon';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
+/**
+ * @callback onChange
+ * @param {React.ChangeEvent<HTMLInputElement>} e
+ * @returns {void}
+ */
+
+/**
+ * @param {Object} param
+ * @param {onChange} param.onChange
+ */
 const UploadButton = ({ onChange }) => {
   const inputRef = React.useRef(null);
 

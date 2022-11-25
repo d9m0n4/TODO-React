@@ -3,15 +3,20 @@ import useUploadFile from '../../hooks/useUploadFile';
 import AddIcon from '../ui/addIcon';
 import UploadButton from '../uploadFile';
 
-const TodoAddForm = ({ todo, setTodo, addTodo }) => {
+/**
+ * @param {Object} props
+ * @param {import('../../types.js').todoObject} props.todo
+ */
+
+const TodoAddForm = ({ todo, setTodo, handleSubmitTodo }) => {
   const { fileName, fileUrl, uploadFile } = useUploadFile();
 
   useEffect(() => {
     setTodo((p) => ({ ...p, file: fileUrl }));
-  }, [fileUrl]);
+  }, [fileUrl, setTodo]);
 
   return (
-    <form onSubmit={addTodo} className="todo__form">
+    <form onSubmit={handleSubmitTodo} className="todo__form">
       <div className="todo__title">
         <input
           required

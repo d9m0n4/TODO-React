@@ -46,15 +46,14 @@
         align-items: center;
       }
       &__text {
-        margin-left: 8px;
-        max-width: 400px;
-        padding: 0 8px;
+        max-width: 385px;
+        padding: 0 16px;
         background: transparent;
       }
       &__descr {
-        max-width: 370px;
         font-size: 14px;
         color: #303030;
+        cursor: pointer;
         &.edit {
           color: #000;
           border: none;
@@ -64,6 +63,10 @@
           white-space: wrap;
           width: 100%;
           font-family: inherit;
+        }
+        &.open {
+          white-space: break-spaces;
+          word-break: break-all;
         }
       }
       &__title {

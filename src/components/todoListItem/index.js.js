@@ -7,9 +7,31 @@ import formatDate from '../../utils/formatDate';
 import isDateDiff from '../../utils/dateDiff';
 import XIcon from '../ui/xIcon';
 
+/**
+ * @callback onDelete
+ * @param {string} id
+ *
+ */
+
+/**
+ * @callback todoCb
+ * @param {import('../../types').todoObject} todo
+ *
+ */
+
+/**
+ * @param {Object} props
+ * @param {import('../../types').todoObject} props.todo
+ * @param {onDelete} props.onDelete
+ * @param {todoCb} props.handleUpdateTodo
+ * @param {todoCb} props.toggleComplete
+ * @returns
+ */
+
 const TodoItem = ({ todo, onDelete, handleUpdateTodo, toggleComplete }) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [newData, setNewData] = React.useState(todo);
+  const [isOpenDescription, setIsOpenDescription] = React.useState(false);
 
   const updateTodo = () => {
     handleUpdateTodo(newData);
@@ -19,7 +41,7 @@ const TodoItem = ({ todo, onDelete, handleUpdateTodo, toggleComplete }) => {
   return (
     <li className="todo__list-item">
       <div className="todo__list-item__body">
-        {isDateDiff(todo.date + todo.time) ? (
+        {isDateDiff(todo.date + todo.time) && !newData.isComplete ? (
           <XIcon />
         ) : (
           <input
@@ -48,7 +70,11 @@ const TodoItem = ({ todo, onDelete, handleUpdateTodo, toggleComplete }) => {
               className="todo__list-item__descr edit"
             />
           ) : (
-            <p className="todo__list-item__descr textOverflow">{newData.description}</p>
+            <p
+              onClick={() => setIsOpenDescription(!isOpenDescription)}
+              className={`todo__list-item__descr textOverflow ${isOpenDescription ? 'open' : ''}`}>
+              {newData.description}
+            </p>
           )}
           <div className="todo__list-item__info">
             <div className="todo__list-item__date">
@@ -58,7 +84,7 @@ const TodoItem = ({ todo, onDelete, handleUpdateTodo, toggleComplete }) => {
             </div>
             <span className="todo__list-item__file">
               {todo.file && (
-                <a href={todo.file} target="_blank">
+                <a href={todo.file} target="_blank" rel="noreferrer">
                   <DocumentIcon />
                 </a>
               )}
