@@ -27,14 +27,15 @@ function App() {
   };
 
   useEffect(() => {
-    const snapshotQuery = onSnapshot(collection(db, 'todos'), (querySnapshot) => {
+    const unsub = onSnapshot(collection(db, 'todos'), (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
         todosArray.push({ id: doc.id, ...doc.data() });
       });
       setTodos(todosArray);
     });
-    return () => snapshotQuery();
+    //прекращаем слушать изменения в реальном времени
+    return () => unsub();
   }, []);
 
   return (
