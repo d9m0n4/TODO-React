@@ -33,6 +33,13 @@
       }
       &__body {
         display: flex;
+        svg {
+          align-self: center;
+          path {
+            stroke: #b82e04;
+            stroke-width: 3;
+          }
+        }
       }
       &__controls {
         display: flex;
@@ -42,6 +49,36 @@
         margin-left: 8px;
         max-width: 400px;
         padding: 0 8px;
+        background: transparent;
+      }
+      &__descr {
+        max-width: 370px;
+        font-size: 14px;
+        color: #303030;
+        &.edit {
+          color: #000;
+          border: none;
+          outline: none;
+          background: transparent;
+          resize: none;
+          white-space: wrap;
+          width: 100%;
+          font-family: inherit;
+        }
+      }
+      &__title {
+        border: none;
+        outline: none;
+        padding: 4px 0;
+        font-size: 18px;
+        &.expired {
+          text-decoration: line-through;
+          color: #b82e04;
+        }
+        &.complete {
+          text-decoration: line-through;
+          color: #18b603;
+        }
       }
       &__check {
         width: 24px;
@@ -58,6 +95,20 @@
           svg {
             path {
               fill: #e4c112;
+            }
+          }
+        }
+      }
+      &__checkbtn {
+        svg {
+          path {
+            stroke: #1bcf03;
+          }
+        }
+        &:hover {
+          svg {
+            path {
+              stroke: #18b603;
             }
           }
         }
@@ -174,5 +225,8 @@
   }
   &__checkbox {
     margin: 0 4px;
+  }
+  &--expired {
+    color: #b82e04;
   }
 }

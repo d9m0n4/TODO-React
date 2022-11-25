@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import './App.less';
 import TodoAddForm from './components/todoAddForm';
-import TodoItem from './components/todoItem/todoItem';
+import TodoItem from './components/todoListItem/index.js';
 import db from './firebase/config';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot } from 'firebase/firestore';
+import TodoList from './components/todoList';
 
 function App() {
   const initialTodo = {
@@ -32,24 +33,32 @@ function App() {
     setTodo(initialTodo);
   };
 
-  const deleteTodo = (t) => {
-    console.log(t);
+  const deleteTodo = async (id) => {
+    await deleteDoc(doc(db, 'todos', id));
   };
 
-  const editTodo = (t) => {
-    console.log(t);
+  const handleUpdateTodo = async (t) => {
+    await updateDoc(doc(db, 'todos', t.id), {
+      title: t.title,
+      description: t.description,
+    });
   };
 
-  const reacdData = async (db) => {
-    const querySnapshot = await getDocs(collection(db, 'todos'));
-    console.log(querySnapshot);
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()} ${doc}`);
+  const toggleComplete = async (todo) => {
+    await updateDoc(doc(db, 'todos', todo.id), {
+      isComplete: !todo.isComplete,
     });
   };
 
   useEffect(() => {
-    reacdData(db);
+    const snapshotQuery = onSnapshot(collection(db, 'todos'), (querySnapshot) => {
+      let todosArray = [];
+      querySnapshot.forEach((doc) => {
+        todosArray.push({ id: doc.id, ...doc.data() });
+      });
+      setTodos(todosArray);
+    });
+    return () => snapshotQuery();
   }, []);
 
   return (
@@ -57,13 +66,12 @@ function App() {
       <div className="todo">
         <h1>Список задач ✏️</h1>
         <TodoAddForm todo={todo} setTodo={setTodo} addTodo={addTodo} />
-        {todos.length > 0 && (
-          <ul className="todo__list">
-            {todos.map((todo, i) => (
-              <TodoItem key={i} todo={todo} onEdit={editTodo} onDelete={deleteTodo} />
-            ))}
-          </ul>
-        )}
+        <TodoList
+          todos={todos}
+          deleteTodo={deleteTodo}
+          handleUpdateTodo={handleUpdateTodo}
+          toggleComplete={toggleComplete}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,15 @@
 import React, { useEffect } from 'react';
+import useUploadFile from '../../hooks/useUploadFile';
 import AddIcon from '../ui/addIcon';
 import UploadButton from '../uploadFile';
+
 const TodoAddForm = ({ todo, setTodo, addTodo }) => {
+  const { fileName, fileUrl, uploadFile } = useUploadFile();
+
+  useEffect(() => {
+    setTodo((p) => ({ ...p, file: fileUrl }));
+  }, [fileUrl]);
+
   return (
     <form onSubmit={addTodo} className="todo__form">
       <div className="todo__title">
@@ -41,8 +49,8 @@ const TodoAddForm = ({ todo, setTodo, addTodo }) => {
             />
           </div>
           <div className="todo__details-upload">
-            Файл
-            <UploadButton />
+            {fileName ? fileName : 'Файл'}
+            <UploadButton onChange={uploadFile} />
           </div>
         </div>
       )}
